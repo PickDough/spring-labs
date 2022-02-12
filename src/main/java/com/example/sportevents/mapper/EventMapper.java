@@ -2,7 +2,9 @@ package com.example.sportevents.mapper;
 
 import com.example.sportevents.entity.EventEntity;
 import com.example.sportevents.model.Event;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EventMapper implements MapperInterface<Event, EventEntity> {
 
     @Override

@@ -11,10 +11,12 @@ import com.example.sportevents.service.abstracts.AbstractService;
 import com.example.sportevents.service.abstracts.EventResultServiceInterface;
 import com.example.sportevents.service.abstracts.EventServiceInterface;
 import com.example.sportevents.service.abstracts.TeamServiceInterface;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EventResultService extends AbstractService<EventResult, EventResultEntity> implements EventResultServiceInterface {
     record Pair(EventResultEntity ee, EventResult e) {}
 

@@ -6,9 +6,11 @@ import com.example.sportevents.model.Team;
 import com.example.sportevents.repository.abstracts.TeamRepositoryInterface;
 import com.example.sportevents.service.abstracts.AbstractService;
 import com.example.sportevents.service.abstracts.TeamServiceInterface;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TeamService extends AbstractService<Team, TeamEntity> implements TeamServiceInterface {
     private final TeamRepositoryInterface repository;
 

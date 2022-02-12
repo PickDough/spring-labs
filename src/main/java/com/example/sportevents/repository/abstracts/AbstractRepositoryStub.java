@@ -11,6 +11,7 @@ public abstract class AbstractRepositoryStub<TEntity extends Entity> implements 
 
     @Override
     public void Create(TEntity entity) {
+        entity.Id = TEntity.id++;
         entities.add(entity);
     }
 
