@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractRepositoryStub<TEntity extends Entity> implements RepositoryInterface<TEntity> {
-    protected ArrayList<TEntity> entities;
+    protected ArrayList<TEntity> entities = new ArrayList<>();
 
     @Override
     public void Create(TEntity entity) {
-        entity.Id = TEntity.id++;
+        entity.Id = entity.autoIncrement();
         entities.add(entity);
     }
 

@@ -23,4 +23,9 @@ public class TeamService extends AbstractService<Team, TeamEntity> implements Te
     public List<Team> GetByName(String name) {
         return repository.FindByName(name).stream().map(mapper::ToModel).toList();
     }
+
+    @Override
+    public List<Team> GetAllWithFilterAndPagination(String name, int limit, int offset) {
+        return repository.FindByNameAndPagination(name, limit, offset).stream().map(mapper::ToModel).toList();
+    }
 }

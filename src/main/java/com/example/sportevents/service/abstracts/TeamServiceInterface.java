@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TeamServiceInterface extends ServiceInterface<Team> {
     List<Team> GetByName(String name);
+
+    List<Team> GetAllWithFilterAndPagination(String name, int limit, int offset);
 }
