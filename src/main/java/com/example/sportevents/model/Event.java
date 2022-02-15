@@ -1,5 +1,6 @@
 package com.example.sportevents.model;
 
+import javax.validation.constraints.Null;
 import java.util.Date;
 
 public class Event extends Model {

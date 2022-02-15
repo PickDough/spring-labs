@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RepositoryInterface<TEntity extends Entity> {
-    void Create(TEntity entity);
+    int Create(TEntity entity);
     Optional<TEntity> Read(int id);
     List<TEntity> ReadAll();
     void Update(TEntity entity);

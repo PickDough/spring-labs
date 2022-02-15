@@ -29,7 +29,7 @@ public class EventController {
     }
 
     @PostMapping
-    public void add(@Valid Event event){
+    public void add(@RequestBody Event event){
         eventService.Add(event);
     }
 
