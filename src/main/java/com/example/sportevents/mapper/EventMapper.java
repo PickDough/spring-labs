@@ -9,7 +9,12 @@ public class EventMapper implements MapperInterface<Event, EventEntity> {
 
     @Override
     public Event ToModel(EventEntity eventEntity) {
-        return new Event(eventEntity.Id, eventEntity.Title, eventEntity.Date);
+
+        var event = new Event();
+        event.setId(eventEntity.Id);
+        event.setTitle(eventEntity.Title);
+        event.setDate(eventEntity.Date);
+        return event;
     }
 
     @Override

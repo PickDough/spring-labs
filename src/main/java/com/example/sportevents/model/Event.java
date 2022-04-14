@@ -2,23 +2,25 @@ package com.example.sportevents.model;
 
 import javax.validation.constraints.Null;
 import java.util.Date;
+import lombok.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
 public class Event extends Model {
 
-    public Event(int id, String title, java.util.Date date) {
-        Id = id;
-        Title = title;
-        Date = date;
-    }
 
-    private final int Id;
+    private int Id;
 
-    private final String Title;
+    private String Title;
 
     private Team FirstTeam;
     private Team SecondTeam;
 
-    private final Date Date;
+    private Date Date;
 
     public int getId() {
         return Id;

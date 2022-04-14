@@ -1,12 +1,18 @@
 package com.example.sportevents.model;
 
+import lombok.*;
+
+@Data
+@NoArgsConstructor
+@Getter
+@Setter
 public class EventResult extends Model {
-    private final int Id;
+    private int Id;
 
     private Event Event;
 
-    private final int FirstTeamScore;
-    private final int SecondTeamScore;
+    private int FirstTeamScore;
+    private int SecondTeamScore;
 
     private Team Winner;
 

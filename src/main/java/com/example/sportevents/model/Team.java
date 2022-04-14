@@ -1,15 +1,20 @@
 package com.example.sportevents.model;
 
+import lombok.*;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
 public class Team extends Model {
 
-    public Team(int id, String name) {
-        Id = id;
-        Name = name;
-    }
 
-    private final int Id;
 
-    private final String Name;
+    private int Id;
+
+    private String Name;
 
     public int getId() {
         return Id;
