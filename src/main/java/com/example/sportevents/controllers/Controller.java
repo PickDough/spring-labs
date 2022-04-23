@@ -101,7 +101,6 @@ public class Controller {
 
         model.addAttribute("results", eventResultService.GetAll());
 
-
         return "EventArchiveAdmin";
     }
 
