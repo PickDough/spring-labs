@@ -3,6 +3,7 @@ package com.example.sportevents.model;
 import javax.validation.constraints.Null;
 import java.util.Date;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @NoArgsConstructor
@@ -19,7 +20,7 @@ public class Event extends Model {
 
     private Team FirstTeam;
     private Team SecondTeam;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date Date;
 
     public int getId() {

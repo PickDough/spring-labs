@@ -11,8 +11,7 @@
 <form class="row g-3" action="#" th:action="@{/saveteam}" method="POST" th:object="${team}">
 <!--form class="row g-3" -->
     <div class="col-md-6">
-        <label class="form-label">Id</label>
-        <input type="number" min="0" th:field="*{Id}" class="form-control" id="inputID" />
+
         <label class="form-label">Name</label>
         <input type="text" th:field="*{Name}" class="form-control" id="inputTeamName" />
     </div>

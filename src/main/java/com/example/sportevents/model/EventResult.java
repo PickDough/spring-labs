@@ -38,6 +38,8 @@ public class EventResult extends Model {
         return SecondTeamScore;
     }
 
+    public String getFinalScore() { return FirstTeamScore + " : " + SecondTeamScore; }
+
     public Team getWinner() {
         return Winner;
     }
