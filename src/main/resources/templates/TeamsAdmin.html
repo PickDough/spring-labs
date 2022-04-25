@@ -15,11 +15,15 @@
     </thread>
     <tbody>
     <tr th:each="team : ${teams}">
-        <form class="row g-3" action="#" th:action="@{/gotoupdateteam}" method="POST" th:object="${team}">
-        <td th:text = "${team.getId()}"></td>
+        <form class="row g-3" action="#" th:action="@{/gotoupdateteam}" method="GET" th:object="${team}">
+        <td name="teamId" th:text = "${team.getId()}"></td>
         <td th:text = "${team.getName()}"></td>
-
+            <input type="hidden" name="teamId" th:value="${team.getId()}">
             <td><button type="submit" class="btn btn-outline-warning">Edit</button></td>
+        </form>
+        <form class="row g-3" action="#" th:action="@{/deleteteam}" method="POST" th:object="${team}">
+            <input type="hidden" name="teamId" th:value="${team.getId()}">
+            <td><button type="submit" class="btn btn-outline-danger">Delete</button></td>
         </form>
 
     </tr>

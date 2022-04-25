@@ -13,7 +13,8 @@
     <div class="col-md-6">
 
         <label class="form-label">Name</label>
-        <input type="text" th:field="*Name" class="form-control" id="inputTeamName" />
+        <input type="text" th:name="newName" th:value="${team.getName()}" class="form-control" id="inputTeamName" />
+        <input type="hidden" th:name="teamId" th:value="${team.getId()}">
     </div>
     <div class="col-12">
         <button type="submit" class="btn btn-primary" value="Update Team">Update Team</button>

@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.sportevents.service.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @org.springframework.stereotype.Controller
@@ -51,11 +54,11 @@ public class Controller {
     }
 
     @PostMapping("/saveteam")
-    public String SaveNewTeam(@ModelAttribute(value="team") Team team){
+    public String SaveNewTeam(@ModelAttribute(value="team") Team team, Model model){
 
         teamService.Add(team);
-
-        return "teams";
+        model.addAttribute("teams", teamService.GetAll());
+        return "TeamsAdmin";
 
     }
 
@@ -119,15 +122,22 @@ public class Controller {
     }
 
     @RequestMapping(value ="/eventCreation/saveevent", method = RequestMethod.POST)
-    public String SaveEvent(@ModelAttribute("eventForm") EventForm form){
+    public String SaveEvent(@RequestParam (value="DateParam") String dateStr,
+                            @RequestParam (value="FirstTeam") String idFirstStr,
+                            @RequestParam (value="SecondTeam") String idSecondStr,
+                            @RequestParam (value="Title") String title, Model model
+                            ) throws ParseException {
 
         Event curEvent = new Event();
-        curEvent.setDate(form.getDate());
-        curEvent.setFirstTeam(form.getSelectedFirstTeam());
-        curEvent.setSecondTeam(form.getSelectedSecondTeam());
-        curEvent.setTitle(form.getTitle());
-        eventService.Add(curEvent);
 
+        curEvent.setTitle(title);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        curEvent.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(dateStr));
+        curEvent.setFirstTeam(teamService.Get(Integer.parseInt(idFirstStr)).get());
+        curEvent.setSecondTeam(teamService.Get(Integer.parseInt(idSecondStr)).get());
+
+        eventService.Add(curEvent);
+        model.addAttribute("events", eventService.GetAll());
         return "TeamsAndEvents";
     }
     @GetMapping("/ResultCreation")
@@ -158,17 +168,27 @@ public class Controller {
     }
 
     @GetMapping("/gotoupdateteam")
-    public String GoToUpdateTeam(@ModelAttribute("Id") String strID, Model model){
+    public String GoToUpdateTeam(@RequestParam("teamId") String strID, Model model){
         int Id = Integer.parseInt(strID);
 
-        model.addAttribute("team", teamService.Get(Id));
+        model.addAttribute("team", teamService.Get(Id).get());
         return "teamUpdate";
     }
 
     @PostMapping("/updateteam")
-    public String UpdateTeam(@ModelAttribute("team") Team team, Model model){
+    public String UpdateTeam(@RequestParam("newName") String newName,
+                             @RequestParam("teamId") String idStr, Model model){
+        Team curTeam = teamService.Get(Integer.parseInt(idStr)).get();
+        curTeam.setName(newName);
+        teamService.Update(curTeam);
+        model.addAttribute("teams", teamService.GetAll());
+        return "TeamsAdmin";
+    }
+    @PostMapping("/deleteteam")
+    public String DeleteTeam(@RequestParam("teamId") String idStr, Model model){
 
-        teamService.Update(team);
+        teamService.Remove(Integer.parseInt(idStr));
+        model.addAttribute("teams", teamService.GetAll());
         return "TeamsAdmin";
     }
 
