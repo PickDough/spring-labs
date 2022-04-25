@@ -87,6 +87,12 @@ public class Controller {
 
 
     }
+    @GetMapping("EventArchiveAmdin")
+    public String GoToArchiveAdmin(Model model){
+
+        model.addAttribute("results", eventResultService.GetAll());
+        return "EventArchiveAdmin";
+    }
 
     @GetMapping("/TeamsAndEvents")
     public String GoToTeamAndEvents(Model model){
@@ -114,12 +120,6 @@ public class Controller {
         return modelAndView;
     }
 
-    public String CreateEvent(Model model){
-
-
-
-        return "EventArchiveAdmin";
-    }
 
     @RequestMapping(value ="/eventCreation/saveevent", method = RequestMethod.POST)
     public String SaveEvent(@RequestParam (value="DateParam") String dateStr,
@@ -148,6 +148,28 @@ public class Controller {
 
         return "ResultCreation";
     }
+    @PostMapping("/ResultCreation/saveresult")
+    public String CreateResult(@RequestParam(value = "eventId") String eventIdStr,
+                               @RequestParam(value ="firstScore") String firstScoreStr,
+                               @RequestParam(value = "secondScore") String secondScoreStr,
+                               Model model){
+        EventResult curRes = new EventResult();
+        curRes.setEvent(eventService.Get(Integer.parseInt(eventIdStr)).get());
+        curRes.setFirstTeamScore(Integer.parseInt(firstScoreStr));
+        curRes.setSecondTeamScore(Integer.parseInt(secondScoreStr));
+        if(!(curRes.getSecondTeamScore()==curRes.getFirstTeamScore())){
+            if(curRes.getFirstTeamScore()>curRes.getSecondTeamScore()){
+                curRes.setWinner(teamService.Get(eventService.Get(curRes.getEvent().getId()).get().getFirstTeam().getId()).get());
+            }
+            else{
+                curRes.setWinner(teamService.Get(eventService.Get(curRes.getEvent().getId()).get().getSecondTeam().getId()).get());
+            }
+        }
+
+        eventResultService.Add(curRes);
+        model.addAttribute("results", eventResultService.GetAll());
+        return "EventArchiveAdmin";
+    }
 
     @GetMapping("/EventArchiveAdmin")
     public String GoToEventArchiveAdminMode(Model model){
@@ -165,6 +187,44 @@ public class Controller {
 
 
         return "TeamsAndEventsAdmin";
+    }
+    @GetMapping("/gotoupdateresult")
+    public String GoToUpdateResult(@RequestParam(value = "resultId") String resIdStr,
+                                   Model model){
+        model.addAttribute("result", eventResultService.Get(Integer.parseInt(resIdStr)).get());
+        model.addAttribute("listEvents", eventService.GetAll());
+        return "ResultEdition";
+    }
+    @PostMapping("/ResultEdition/updateresult")
+    public String UpdateResult(@RequestParam(value = "resultId") String resIdStr,
+                               @RequestParam(value = "eventId") String eventIdStr,
+                               @RequestParam(value ="firstScore") String firstScoreStr,
+                               @RequestParam(value = "secondScore") String secondScoreStr,
+                               Model model){
+
+        EventResult curRes = eventResultService.Get(Integer.parseInt(resIdStr)).get();
+        curRes.setEvent(eventService.Get(Integer.parseInt(eventIdStr)).get());
+        curRes.setFirstTeamScore(Integer.parseInt(firstScoreStr));
+        curRes.setSecondTeamScore(Integer.parseInt(secondScoreStr));
+        if(!(curRes.getSecondTeamScore()==curRes.getFirstTeamScore())){
+            if(curRes.getFirstTeamScore()>curRes.getSecondTeamScore()){
+                curRes.setWinner(teamService.Get(eventService.Get(curRes.getEvent().getId()).get().getFirstTeam().getId()).get());
+            }
+            else{
+                curRes.setWinner(teamService.Get(eventService.Get(curRes.getEvent().getId()).get().getSecondTeam().getId()).get());
+            }
+        }
+        eventResultService.Update(curRes);
+
+        model.addAttribute("results", eventResultService.GetAll());
+        return "EventArchiveAdmin";
+    }
+    @PostMapping("/deleteresult")
+    public String DeleteResult(@RequestParam(value="resultId") String resIdStr, Model model){
+
+        eventResultService.Remove(Integer.parseInt(resIdStr));
+        model.addAttribute("results", eventResultService.GetAll());
+        return "EventArchiveAdmin";
     }
 
     @GetMapping("/gotoupdateteam")
@@ -192,5 +252,40 @@ public class Controller {
         return "TeamsAdmin";
     }
 
+    @GetMapping("/gotoupdateevent")
+    public String GotToUpdateEvent(@RequestParam(value = "eventId") String teamIdStr,Model model){
+
+        model.addAttribute("event", eventService.Get(Integer.parseInt(teamIdStr)).get());
+        model.addAttribute("listTeams", teamService.GetAll());
+        return "EventEdition";
+    }
+
+    @PostMapping("/eventEdition/updateevent")
+    public String UpdateTeam(@RequestParam(value = "eventId") String eventIdStr,
+                             @RequestParam (value="DateParam") String dateStr,
+                             @RequestParam (value="FirstTeam") String idFirstStr,
+                             @RequestParam (value="SecondTeam") String idSecondStr,
+                             @RequestParam (value="Title") String title, Model model) throws ParseException {
+        Event curEvent = eventService.Get(Integer.parseInt(eventIdStr)).get();
+        curEvent.setTitle(title);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        curEvent.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(dateStr));
+        curEvent.setFirstTeam(teamService.Get(Integer.parseInt(idFirstStr)).get());
+        curEvent.setSecondTeam(teamService.Get(Integer.parseInt(idSecondStr)).get());
+
+        eventService.Update(curEvent);
+
+        model.addAttribute("events", eventService.GetAll());
+        return "TeamsAndEventsAdmin";
+    }
+
+    @PostMapping("/deleteevent")
+    public String DeleteEvent(@RequestParam(value = "eventId") String eventIdStr,
+                              Model model){
+
+        eventService.Remove(Integer.parseInt(eventIdStr));
+        model.addAttribute("events", eventService.GetAll());
+        return "TeamsAndEventsAdmin";
+    }
 
 }

@@ -23,8 +23,14 @@
         <td th:text="${event.getFirstTeam().getName()}"></td>
         <td th:text="${event.getSecondTeam().getName()}"></td>
         <td th:text="${event.getDate()}"></td>
-        <td><button type="button" class="btn btn-outline-warning">Edit</button></td>
-        <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+        <form class="row g-3" action="#" th:action="@{/gotoupdateevent}" method="GET" th:object="${event}">
+            <input type="hidden" th:name="eventId" th:value="${event.getId()}">
+            <td><button type="submit" class="btn btn-outline-warning">Edit</button></td>
+        </form>
+        <form class="row g-3" action="#" th:action="@{/deleteevent}" method="POST" th:object="${event}">
+            <input type="hidden" th:name="eventId" th:value="${event.getId()}">
+            <td><button type="submit" class="btn btn-outline-danger">Delete</button></td>
+        </form>
     </tr>
     </tbody>
 </table>

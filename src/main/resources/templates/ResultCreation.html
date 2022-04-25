@@ -12,18 +12,21 @@
     <div class="col-md-6">
         <p>
             <label class="form-label">Event</label>
-            <select th:field="*{Event}">
-                <option th:each="p : ${listEvents}" th:value="${p}" th:text="${p.getTitle()}" />
+            <select name="eventId">
+                <option th:each="p : ${listEvents}" name="eventId" th:value="${p.getId()}" th:text="${p.getTitle()}"></option>
             </select>
         </p>
         <p>
             <label class="form-label">FirstTeamScore</label>
-            <input type="number" min="0" th:field="*{FirstTeamScore}">
+            <input type="number" min="0" name="firstScore">
         </p>
         <p>
             <label class="form-label">SecondTeamScore</label>
-            <input type="number" min="0" th:field="*{SecondTeamScore}">
+            <input type="number" min="0" name="secondScore">
         </p>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary" value="Create New Team">Add Result</button>
     </div>
 </form>
 </h3>
