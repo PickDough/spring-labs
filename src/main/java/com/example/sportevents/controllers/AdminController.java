@@ -11,14 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 
 @org.springframework.stereotype.Controller
-public class Controller {
+public class AdminController {
 
     private EventResultService eventResultService;
     private EventService eventService;
@@ -30,7 +26,7 @@ public class Controller {
                 new TeamEditor());
     }
 
-    public Controller(EventResultService _resultService, EventService _eventService, TeamService _teamService) {
+    public AdminController(EventResultService _resultService, EventService _eventService, TeamService _teamService) {
 
         eventResultService = _resultService;
         eventService = _eventService;
@@ -38,12 +34,6 @@ public class Controller {
 
     }
 
-    @GetMapping("/")
-    public String GoHome(Model model) {
-        model.addAttribute("events", eventService.GetAll());
-        return "index";
-
-    }
 
     @GetMapping("/TeamCreation")
     public String GoTeamCreation(Model model) {
@@ -64,13 +54,7 @@ public class Controller {
 
     }
 
-    @GetMapping("teams")
-    public String GetAllTeams(Model model) {
 
-        model.addAttribute("teams", teamService.GetAll());
-
-        return "teams";
-    }
 
     @GetMapping("teamsAdmin")
     public String GetAllTeamsForAdmin(Model model) {
@@ -80,15 +64,7 @@ public class Controller {
         return "teamsAdmin";
     }
 
-    @GetMapping("/EventArchive")
-    public String GoToArchive(Model model) {
 
-        model.addAttribute("results", eventResultService.GetAll());
-
-        return "EventArchive";
-
-
-    }
 
     @GetMapping("EventArchiveAmdin")
     public String GoToArchiveAdmin(Model model) {
@@ -97,13 +73,6 @@ public class Controller {
         return "EventArchiveAdmin";
     }
 
-    @GetMapping("/TeamsAndEvents")
-    public String GoToTeamAndEvents(Model model) {
-
-        model.addAttribute("events", eventService.GetAll());
-
-        return "TeamsAndEvents";
-    }
 
     @GetMapping("/eventCreationPage")
     public ModelAndView GoToEventCreation() {
