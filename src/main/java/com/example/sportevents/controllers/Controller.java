@@ -37,10 +37,10 @@ public class Controller {
 
     }
 
-    @GetMapping("/HomePage")
-    public String GoHome(){
-
-        return "HomePage";
+    @GetMapping("/")
+    public String GoHome(Model model){
+        model.addAttribute("events", eventService.GetAll());
+        return "index";
 
     }
     @GetMapping("/TeamCreation")
