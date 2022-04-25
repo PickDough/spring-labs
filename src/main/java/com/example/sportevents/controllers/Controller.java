@@ -227,7 +227,7 @@ public class Controller {
         return "EventArchiveAdmin";
     }
 
-    @PostMapping("/deleteresult")
+    @PostMapping("/EventArchiveAdmin/deleteresult")
     public String DeleteResult(@RequestParam(value = "resultId") String resIdStr, Model model) {
 
         eventResultService.Remove(Integer.parseInt(resIdStr));
