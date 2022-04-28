@@ -72,6 +72,9 @@ public class EventResultRepository implements EventResultRepositoryInterface {
 
     @Override
     public void Delete(int id) {
+        var sql =
+                "Delete from " + tableName + " where id = ?";
 
+        jdbcTemplate.update(sql, id);
     }
 }

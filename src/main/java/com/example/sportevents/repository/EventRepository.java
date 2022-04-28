@@ -9,6 +9,11 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +21,7 @@ import java.util.Optional;
 public class EventRepository implements EventRepositoryInterface {
     private final JdbcTemplate jdbcTemplate;
     private RowMapper<EventEntity> rowMapper;
-
+    private SimpleDateFormat format = new SimpleDateFormat("2022-06-12");
     private final String tableName = "events";
 
     public EventRepository(JdbcTemplate jdbcTemplate, RowMapper<EventEntity> rowMapper) {
@@ -36,7 +41,7 @@ public class EventRepository implements EventRepositoryInterface {
             stm.setString(1, entity.Title);
             stm.setInt(2, entity.FirstTeamId);
             stm.setInt(3, entity.SecondTeamId);
-            stm.setString(4, entity.Date.toString());
+            stm.setString(4, format.format(entity.Date));
             return stm;
         }, keyHolder);
 
