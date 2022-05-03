@@ -13,8 +13,10 @@ import com.example.sportevents.service.abstracts.EventServiceInterface;
 import com.example.sportevents.service.abstracts.TeamServiceInterface;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 public class EventResultService extends AbstractService<EventResult, EventResultEntity> implements EventResultServiceInterface {
@@ -63,4 +65,21 @@ public class EventResultService extends AbstractService<EventResult, EventResult
 
         return model;
     }
+
+    public List<EventResult> FindResultsByText(String inputString){
+
+        ArrayList<EventResult> foundResults = new ArrayList<EventResult>();
+
+        for(EventResult ev : GetAll()){
+
+            String eventResString = ev.getEvent().getFirstTeam().getName() + " " + ev.getEvent().getSecondTeam().getName();
+            if (eventResString.matches(".*" + Pattern.quote(inputString) + ".*")){
+                foundResults.add(ev);
+            }
+        }
+
+        return foundResults;
+
+    }
+
 }

@@ -63,4 +63,29 @@ public class UserController {
 
         return "TeamsAndEvents";
     }
+
+    @GetMapping("/searchevents")
+    public String SearchEvent(@RequestParam(value = "searchinput") String inputSearch,
+                              Model model){
+
+        model.addAttribute("events", eventService.FindEventsByText(inputSearch));
+
+        return "index";
+    }
+    @GetMapping("/searchteams")
+    public String SearchTeam(@RequestParam(value = "searchinput") String input,
+                             Model model){
+
+        model.addAttribute("teams", teamService.FindTeamsByText(input));
+
+        return "TeamsAdmin";
+    }
+
+    @GetMapping("/searchresults")
+    public String SearchResult(@RequestParam(value = "searchinput") String input,
+                               Model model){
+        model.addAttribute("results", eventResultService.FindResultsByText(input));
+
+        return "EventArchiveAdmin";
+    }
 }

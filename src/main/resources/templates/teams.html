@@ -29,21 +29,51 @@
         </ul>
     </div>
 </nav>
-<table class="table table-dark">
-    <thread>
+<div class="input-group">
+    <form class="row g-3" action="#" th:action="@{/searchteams}" method="GET">
+        <div class="form-outline">
+            <input id="search-input" name="searchinput" type="search" class="form-control" />
+            <label class="form-label">Search</label>
+        </div>
+        <button id="search-button" type="submit" value="Search" th:text="Search" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>
+<div th:if="${teams != null}">
+    <div th:switch="${#lists.size(teams)}">
+        <h2 th:case="'0'">There are no teams that satisfy the query</h2>
+        <div th:case="'1'">
+            <h2>One teams is found</h2>
+            <table class="table table-dark">
+            <tbody>
+            <tr th:each="team : ${teams}">
+                <td th:text = "${team.getId()}"></td>
+                <td th:text = "${team.getName()}"></td>
 
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+        <div th:case="*">
+            <h2 th:text="${teams.size + ' teams were found:'}"></h2>
+            <table class="table table-dark">
+                <thread>
 
-    </thread>
-    <tbody>
-    <tr th:each="team : ${teams}">
-        <td th:text = "${team.getId()}"></td>
-        <td th:text = "${team.getName()}"></td>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
 
-    </tr>
-    </tbody>
-</table>
+                </thread>
+                <tbody>
+                <tr th:each="team : ${teams}">
+                    <td th:text = "${team.getId()}"></td>
+                    <td th:text = "${team.getName()}"></td>
 
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>
