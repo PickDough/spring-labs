@@ -70,7 +70,7 @@ public class UserController {
 
         model.addAttribute("events", eventService.FindEventsByText(inputSearch));
 
-        return "index";
+        return "TeamsAndEventsAdmin";
     }
     @GetMapping("/searchteams")
     public String SearchTeam(@RequestParam(value = "searchinput") String input,

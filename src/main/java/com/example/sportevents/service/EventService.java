@@ -67,9 +67,18 @@ public class EventService extends AbstractService<Event, EventEntity> implements
 
         for(Event ev : GetAll()){
 
-            String eventString = ev.getFirstTeam().getName() + " " + ev.getSecondTeam().getName();
+            String eventString = ev.getTitle();
             if (eventString.matches(".*" + Pattern.quote(inputString) + ".*")){
                 foundEvents.add(ev);
+            }
+
+        }
+        if(foundEvents.isEmpty()){
+            for(Event ev : GetAll()){
+                String eventString = ev.getFirstTeam().getName() + ev.getSecondTeam().getName();
+                if (eventString.matches(".*" + Pattern.quote(inputString) + ".*")){
+                    foundEvents.add(ev);
+                }
             }
         }
 
